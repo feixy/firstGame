@@ -22,9 +22,8 @@ var SysMenuLayer = cc.Layer.extend({
         var newGameNormal = new cc.Sprite(res.Menu_png, cc.rect(0, 0, 126, 33));
         var newGameSelected = new cc.Sprite(res.Menu_png, cc.rect(0, 33, 126, 33));
         var newGameDisable = new cc.Sprite(res.Menu_png, cc.rect(0, 33 * 2, 126, 33));
-        var newGameMenuItem = new cc.MenuItemSprite(newGameNormal, newGameSelected, newGameDisable, function () {
-            cc.log("NewGame clicked!");
-        }, this);
+        var newGameMenuItem = new cc.MenuItemSprite(newGameNormal, newGameSelected,
+            newGameDisable, this.newGameCallback, this);
 
         //游戏设置菜单项
         var gameSettingNormal = new cc.Sprite(res.Menu_png, cc.rect(126, 0, 126, 33));
@@ -80,6 +79,15 @@ var SysMenuLayer = cc.Layer.extend({
                 cc.moveBy(parseInt(5 * Math.random(), 10), cc.p(Math.random() * winSize.width, pos.y + 480))
             );
         }
+    },
+
+    /**
+     * 开始新游戏
+     */
+    newGameCallback: function () {
+        this.playButtonEffect();
+        var gameScene = new GameScene();
+        cc.director.pushScene(new cc.TransitionSlideInL(1.2, gameScene));
     },
 
     /**
